@@ -1,4 +1,5 @@
 import random
+import sys
 import time
 import matplotlib.pyplot as plt
 
@@ -28,7 +29,7 @@ def bruteForcePassword(password):
     duration = end - start
     return duration
 
-def calculateAverageTime(length):
+def calculateAverageBruteForceTime(length):
     totalTime = 0.0
     for _ in range(100):
         arabicDigitString = generateArabicDigitString(length)
@@ -36,9 +37,9 @@ def calculateAverageTime(length):
     averageTime = totalTime / 100.0
     return averageTime
 
-def plotAverageTime():
-    lengths = range(1, 7)
-    averageTimes = [calculateAverageTime(length) for length in lengths]
+def plotAverageTime(length):
+    lengths = range(1, length + 1)
+    averageTimes = [calculateAverageBruteForceTime(length) for length in lengths]
     
     plt.plot(lengths, averageTimes, marker='o')
     plt.xlabel('Length')
@@ -47,8 +48,19 @@ def plotAverageTime():
     plt.show()
 
 if __name__ == "__main__":
-    for length in range(1, 7):
-        averageTime = calculateAverageTime(length)
-        print(f"Average time for length = {length}: {averageTime:.6f}")
-
-    plotAverageTime()
+    if len(sys.argv) > 1:
+        action = sys.argv[1]
+        if action == "-generate":
+            password = generateArabicDigitString(int(sys.argv[2]))
+            print(password)
+            visualizeFrequencyDistribution(password)
+        elif action == "-average":
+            for length in range(1, int(sys.argv[2]) + 1):
+                averageTime = calculateAverageBruteForceTime(length)
+                print(f"Average time for length = {length}: {averageTime:.6f}")
+        elif action == "-plot":
+            plotAverageTime(int(sys.argv[2]))
+        else:
+            print("Invalid action")
+    else:
+        print("Please provide an action")

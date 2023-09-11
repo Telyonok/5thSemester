@@ -47,11 +47,11 @@ def plotAverageTime():
     plt.show()
 
 if __name__ == "__main__":
-    password = generateArabicDigitString(5)
-    print(password)
-    visualizeFrequencyDistribution(password)
+    #password = generateArabicDigitString(100)
+    #print(password)
+    #visualizeFrequencyDistribution(password)
     for length in range(1, 7):
         averageTime = calculateAverageTime(length)
         print(f"Average time for length = {length}: {averageTime:.6f}")
 
-    plotAverageTime()
+    #plotAverageTime()
